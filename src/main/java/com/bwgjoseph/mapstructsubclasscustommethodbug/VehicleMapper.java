@@ -1,22 +1,31 @@
 package com.bwgjoseph.mapstructsubclasscustommethodbug;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.SubclassExhaustiveStrategy;
-import org.mapstruct.SubclassMapping;
 
-import com.bwgjoseph.mapstructsubclasscustommethodbug.dto.CarDtoC;
+import com.bwgjoseph.mapstructsubclasscustommethodbug.dto.CarDto;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.Car;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.CountryWrapper;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.Vehicle;
 
 @Mapper(componentModel = "spring", subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION)
 public interface VehicleMapper {
-    // this is not ok but this should work
-    @SubclassMapping(source = CarDtoC.class, target = Car.class)
+    @BeanMapping(resultType = Car.class)
     @Mapping(source = "country", target = "country", qualifiedByName = "mapCountry")
-    Vehicle toDomainObject(CarDtoC carDto);
+    Vehicle toDomainObject(CarDto carDto);
+
+    // this is not ok but this should work
+    // @SubclassMapping(source = CarDtoC.class, target = Car.class)
+    // @BeanMapping(resultType = Car.class)
+    // @Mapping(source = "country", target = "country", qualifiedByName = "mapCountry")
+    // Vehicle toDomainObject(CarDtoC carDto);
+
+    // @BeanMapping(resultType = Lorry.class)
+    // @Mapping(source = "country", target = "country", qualifiedByName = "mapCountry")
+    // Vehicle toDomainObject(LorryDtoC lorryDto);
 
     // this is ok
     // @SubclassMapping(source = CarDtoC.class, target = Car.class)
