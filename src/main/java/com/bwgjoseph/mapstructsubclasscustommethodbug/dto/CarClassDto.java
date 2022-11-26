@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class CarDtoC {
+public class CarClassDto {
     private Purpose purpose;
     private String model;
     private String country;

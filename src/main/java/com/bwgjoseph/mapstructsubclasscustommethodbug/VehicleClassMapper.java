@@ -6,16 +6,24 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.SubclassExhaustiveStrategy;
 
-import com.bwgjoseph.mapstructsubclasscustommethodbug.dto.CarDto;
+import com.bwgjoseph.mapstructsubclasscustommethodbug.dto.CarClassDto;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.Car;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.CountryWrapper;
 import com.bwgjoseph.mapstructsubclasscustommethodbug.model.Vehicle;
 
 @Mapper(componentModel = "spring", subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION)
-public interface VehicleMapper {
+public interface VehicleClassMapper {
     @BeanMapping(resultType = Car.class)
     @Mapping(source = "country", target = "country", qualifiedByName = "mapCountry")
-    Vehicle toDomainObject(CarDto carDto);
+    // VehicleClassMapperImpl is not generating the setter for `isCar`, hence causing the problem
+    Vehicle toDomainObject(CarClassDto carDto);
+
+    @Named("mapCountry")
+    default CountryWrapper mapCountry(String country) {
+        return CountryWrapper.of(country);
+    }
+
+    // ignore below
 
     // this is not ok but this should work
     // @SubclassMapping(source = CarDtoC.class, target = Car.class)
@@ -35,9 +43,4 @@ public interface VehicleMapper {
     // this is not ok
     // The return type Vehicle is an abstract class or interface. Provide a non abstract / non interface result type or a factory method.
     // Vehicle toDomainObject(CarDtoC carDto);
-
-    @Named("mapCountry")
-    default CountryWrapper mapCountry(String country) {
-        return CountryWrapper.of(country);
-    }
 }

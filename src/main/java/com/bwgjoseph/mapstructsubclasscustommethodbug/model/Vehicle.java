@@ -6,8 +6,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 public abstract class Vehicle {
     public enum Purpose { LAND, AIR }
