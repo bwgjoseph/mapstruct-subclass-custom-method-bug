@@ -1,3 +1,3 @@
 # README
 
-When using `@SubclassMapping` and `@Mapping` throws `Property \"country\" has no write accessor in Vehicle.`, see `VehicleMapper`
+This repo serve as a reproduce of an issue I am facing while using `MapStruct`. See [mapstruct#3090](https://github.com/mapstruct/mapstruct/issues/3090) for further details regarding this issue
